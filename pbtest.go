@@ -1,9 +1,7 @@
 package main
 
 import (
-	"bufio"
 	"fmt"
-	"io"
 	"log"
 	"os"
 
@@ -19,15 +17,8 @@ func main() {
 }
 
 func readFile() {
-	finf, err := os.OpenFile(fileName, os.O_RDONLY, 0644)
+	data, err := os.ReadFile(fileName)
 	if err != nil {
-		log.Fatalf("an error occured: %e\n", err)
-	}
-
-	reader := bufio.NewReader(finf)
-	data := make([]byte, 1000)
-	_, err = reader.Read(data)
-	if err != nil && err != io.EOF {
 		log.Fatalf("an error occured: %e\n", err)
 	}
 
@@ -69,8 +60,7 @@ func writeFile() {
 		log.Fatalf("an error occured: %e\n", err)
 	}
 
-	buf := bufio.NewWriter(finfo)
-	_, err = buf.Write(out)
+	_, err = finfo.Write(out)
 	if err != nil {
 		log.Fatalf("an error occured: %e\n", err)
 	}
